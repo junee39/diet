@@ -268,7 +268,7 @@ saveWeightBtn.addEventListener(
 );
 
 const startDate =
-    new Date("2026-07-01");
+    new Date("2026-06-28");
 
 const today =
     new Date();
