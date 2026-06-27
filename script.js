@@ -274,7 +274,7 @@ const today =
     new Date();
 
 const diffTime =
-    today - startDate;
+    today - startDate + 1;
 
 const diffDays =
     Math.floor(
