@@ -248,7 +248,28 @@ saveWeightBtn.addEventListener(
                 }
             );
 
-            alert("체중 저장 완료");
+            const messages = [
+            "오늘도 수고 많았어! 😊",
+            "화이팅!! 💪",
+            "넌 역시 짱이야! 🌟",
+            "오늘도 한 걸음 해냈다!! 😄",
+            "할 수 있다! 🔥",
+            "오늘도 포기하지 않은 네가 존나 멋져! ✨",
+            "내일도 같이 힘내자! 😆",
+            "바로 이거지! 🍀",
+            "아자아자 화이팅! 💥",
+            "오늘도 그냥 해버렸고~?! 😏",
+            "잘 하고 있다!! 😎",
+            "너 꽤나 멋진걸? 😍",
+            "야르 ~ 😋",
+            "다욧야호~! 😆",
+            "한달뒤에 로제마라엽떡에 명랑핫도그 싹싹야르김치해버려 😊"
+            ];
+
+            const randomMessage =
+                messages[Math.floor(Math.random() * messages.length)];
+
+            alert("체중 저장 완료!\n\n" + randomMessage);
 
             document.getElementById("weightInput").value = weight;
 
