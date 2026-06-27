@@ -91,9 +91,40 @@ loginBtn.addEventListener("click", async () => {
 
         const user = auth.currentUser;
 
-        const userDoc = await getDoc(
-            doc(db, "users", user.uid)
-        );
+        const userDoc = 
+            await getDoc(
+                doc(db, "users", user.uid)
+            );
+
+        const weightDoc = 
+            await getDoc(
+                doc(db,"weights",user.uid)
+            );
+
+        const today = new Date();
+
+        const todayKey =
+        `${today.getFullYear()}-${
+        String(today.getMonth()+1).padStart(2,"0")
+        }-${
+        String(today.getDate()).padStart(2,"0")}`;
+
+        if(weightDoc.exists()){
+
+            const weights =
+                weightDoc.data();
+
+            if(weights[todayKey]!=undefined){
+
+                document.getElementById("weightInput").value =
+                    weights[todayKey];
+
+                document.getElementById("saveWeightBtn").textContent =
+                    "수정하기";
+
+            }
+
+    }
 
         document.querySelector(".login-box").style.display = "none";
 
@@ -109,6 +140,10 @@ loginBtn.addEventListener("click", async () => {
             }
 
             loadRanking();
+            
+            document.getElementById("weightInput").focus();            
+
+            
 
 
     }
@@ -136,6 +171,11 @@ saveStartWeightBtn.addEventListener(
                 ).value
             );
 
+        if (isNaN(startWeight)) {
+            alert("시작 체중을 입력해주세요.");
+            return;
+        }
+
         const username =
             document.getElementById(
                 "username"
@@ -151,8 +191,15 @@ saveStartWeightBtn.addEventListener(
 
         alert("시작 체중 저장 완료");
 
-        loadRanking();
+        document.getElementById("startWeightInput").value = "";
 
+        document.getElementById("startWeightBox").style.display="none";
+
+        document.getElementById("weightBox").style.display="block";
+
+        document.getElementById("weightInput").focus();
+
+        loadRanking();
     }
 );
 
@@ -172,11 +219,18 @@ saveWeightBtn.addEventListener(
                 ).value
             );
 
-        const now =
-            new Date();
+        if (isNaN(weight)) {
+            alert("체중을 입력해주세요.");
+            return;
+        }
+
+        const today = new Date();
 
         const key =
-            Date.now().toString();
+        `${today.getFullYear()}-${
+        String(today.getMonth()+1).padStart(2,"0")
+        }-${
+        String(today.getDate()).padStart(2,"0")}`;
 
         try {
 
@@ -195,6 +249,11 @@ saveWeightBtn.addEventListener(
             );
 
             alert("체중 저장 완료");
+
+            document.getElementById("weightInput").value = weight;
+
+            document.getElementById("saveWeightBtn").textContent =
+            "수정하기";
 
             loadRanking();
 
@@ -253,9 +312,9 @@ async function loadRanking() {
             weightDoc.data();
 
         const latestKey =
-            Object.keys(weights)
-            .sort()
-            .pop();
+        Object.keys(weights)
+        .sort((a,b)=>new Date(a)-new Date(b))
+        .pop();
 
         const latestWeight =
             weights[latestKey];
