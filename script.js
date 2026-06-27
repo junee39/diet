@@ -267,24 +267,19 @@ saveWeightBtn.addEventListener(
     }
 );
 
-const startDate =
-    new Date("2026-06-28");
+const startDate = new Date(2026, 5, 28);
+const today = new Date();
 
-const today =
-    new Date();
 
-const diffTime =
-    today - startDate;
+startDate.setHours(0, 0, 0, 0);
+today.setHours(0, 0, 0, 0);
+
+const diffTime = today - startDate;
 
 const diffDays =
-    Math.floor(
-        diffTime /
-        (1000 * 60 * 60 * 24)
-        ) + 1;
+    Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-document.getElementById(
-    "dayCounter"
-).textContent =
+document.getElementById("dayCounter").textContent =
     diffDays + "일차";
 
 
